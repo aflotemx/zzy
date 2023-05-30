@@ -4,4 +4,6 @@ Hello Github. These are my lazy bash scripts.
 
 Installation Instructions.
 
+```sh
 git clone https://github.com/aflotemxcom/zzy.git ~/.zzy && ~/.zzy/zzy-fix
+```
