@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+test -d .git || echo 'E: not in root dir' || exit ; \
+test -f .gitignore || touch .gitignore ; \
+for i in ${@}; do echo $i | tee -a .gitignore; done ; \
+git add .gitignore

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+dist=`lsb_release -i | awk 'NF>1{print $NF}'` ; \
+[ "$dist" = "Neon" ] && sudo pkcon refresh && sudo pkcon update --autoremove -y ; \
+[ "$dist" = "Neon" ] && exit ; \
+[ "$dist" = "Debian" ] && sudo apt update && sudo apt --assume-yes full-upgrade ; \
+[ "$dist" = "Debian" ] && exit ; \
+echo "E: Won't update any OS other than Debian or KDE Neon."

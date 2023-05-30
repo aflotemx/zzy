@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# get public ip
+ip=`curl ifconfig.me` ; \
+# send it to the clipboard
+echo $ip | xclip ; \
+# display it
+echo $ip

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+sc="git commit -m " && \
+git status && \
+[ -n $1 -a "$1" = "-l" ] && git log -n 1 | tail -1 && exit ; \
+test -z $1 && read -p "$sc $cmnt" cmnt || cmnt=${@} ; \
+[ -z "$cmnt" ] && echo 'E: did not provide a comment' ; \
+[ -z "$cmnt" ] && exit ; \
+git add -A ; \
+echo $sc'"'$cmnt'"' | bash ; \
+git log -1

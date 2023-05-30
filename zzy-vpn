@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# name script
+script="zzy-vpn" ; \
+# prepare help doc
+helpdoc="\n Usage: $script [ option ] || [ config_name ]\n\n
+    \toptions:\n
+        \t\t-c display saved configs.\n
+        \t\t-h display this help document.\n
+        \t\t-s display active sessions.\n\n
+        Note: config_name could be a saved config or a file in your system.\n" ; \
+# catch show saved configs option
+[ -n "$1" ] && [ "$1" = "-c" ] && \
+openvpn3 configs-list ; \
+# Terminate execution or continue if display saved configs wasn't asked for.
+[ -n "$1" ] && [ "$1" = "-c" ] && exit ; \
+# catch show help option
+[ -n "$1" ] && [ "$1" = "-h" ] && \
+# print ascii-art
+cat ~/.zzy/ascii-art.txt ; \
+[ -n "$1" ] && [ "$1" = "-h" ] && echo -e $helpdoc ; \
+# Terminate execution or continue if the help doc wasn't asked for.
+[ -n "$1" ] && [ "$1" = "-h" ] && exit ; \
+# catch show active sessions option
+[ -n "$1" ] && [ "$1" = "-s" ] && openvpn3 sessions-list ; \
+# Terminate execution or continue if display active sessions wasn't asked for.
+[ -n "$1" ] && [ "$1" = "-s" ] && exit ; \
+# get active sessions path(s) if any
+active=(`openvpn3 sessions-list | grep "Path:" | awk 'NF>1{print $NF}'`) ; \
+# make sure at least 1 session is active
+[ -n "$active" ] && \
+# loop paths in active sessions array
+for path in ${active[@]}
+do
+# disconnect session
+openvpn3 session-manage -D -o $path
+done
+# terminate execution or continue if no sessions were found at the start
+[ -n "$active" ] && exit ; \
+# try to initiate a session with provided config name
+[ -n "$1" ] && openvpn3 session-start -c $1 ; \
+# terminate execution or continue if no argument was provided
+[ -n "$1" ] && exit ; \
+# show saved configs list
+openvpn3 configs-list

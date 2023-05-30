@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+key=$1 ;\
+pass -c ssh/$key ;\
+ssh-add $HOME/.ssh/$key/id_rsa

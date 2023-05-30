@@ -1,0 +1,1 @@
+make every script take flags to provide help and info about the command, options, usage

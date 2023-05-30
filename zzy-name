@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+length=6 ; \
+test -z $1 || length=$1 ; \
+length=$(($length-1)) ; \
+u=`pwgen -0 -A 1 1``pwgen -A $length 1` ; \
+echo $u

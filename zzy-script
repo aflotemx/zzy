@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# add prefix to new script name
+zzy=zzy-$1 && \
+# land in project root dir
+cd ~/.zzy/ && \
+# list existing scripts and trimm prefix
+existing=(`find -name "zzy-*" | sed -e "s@./zzy-@@"`) ; \
+# initiate aux variable
+initials="" ; \
+# loop names for existing scripts
+for name in ${existing[@]}
+do
+# save script names initials
+initials=(" $initials `echo ${name:0:1}` ")
+done
+# prepare shebang
+shebang='#!/usr/bin/env bash' && \
+# clear variable
+unset $zzy && \
+# exit if no name is provided
+test -z $1 && echo 'E: did not provide a name' ; \
+test -z $1 && exit ; \
+# prepare the initial of name provided for the new script
+nuInitial=${1:0:1} ; \
+# initiate warn variable
+warn=false ; \
+# loop taken initials
+for taken in ${initials[@]}
+do
+# Warn if the inital for the new script is taken
+[ $nuInitial = $taken  ] && warn=true
+done
+# Warn taken initial
+( $warn ) && echo "W: Initial $nuInitial for new script $zzy is the same for existing script `ls zzy-$nuInitial*`" ; \
+# Ask confirmation to continue
+( $warn ) && read -p "Hit enter to continue: " ; \
+# prevent existing script override
+test -f $zzy && echo 'E: '$zzy' already exists' ; \
+test -f $zzy && exit ; \
+# write shebang to the new script 
+echo $shebang > $zzy
