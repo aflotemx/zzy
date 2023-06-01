@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
 run=zzy-$@ ; \
 # Run the zzy- script detached
-($run)&
-# detach from user
-disown
+$run
