@@ -1,4 +1,22 @@
 #!/usr/bin/env bash
-key=$1 ;\
-pass -c ssh/$key ;\
-ssh-add $HOME/.ssh/$key/id_rsa
+
+# Warn not key provided
+[ -z "$1" ] && echo "E: Did not provide a key name" ; \
+
+# Stop the execution.
+[ -z "$1" ] && exit ; \
+
+# Prepare key not found
+isFile=false;
+
+# Look for private key.
+[ -f ~/.ssh/$1/id_rsa ] && isFile=true ; \
+
+# Inform key not found.
+[ "$isFile" = "false" ] && echo "E: key $1 not found in ssh keys dir." ; \
+
+# Stop the execution.
+[ "$isFile" = "false" ] && exit ; \
+
+# Add ssh key to agent.
+ssh-add -t 90 ~/.ssh/$1/id_rsa
