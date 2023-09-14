@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # remove zzy scripts broken symbolic links on /usr/bin if any
-find /usr/bin/ -xtype l -name "zzy-*" -exec sudo rm {} \; && \
+find ~/bin/ -xtype l -name "zzy-*" -exec sudo rm {} \; && \
 # report deletion
 echo "broken symbolic links deleted" ; \
 # create symbolic links for zzy scripts as needed. Discard output
-find ~/.zzy/ -name "zzy-*" -exec sudo ln -s {} /usr/bin/  \; && \
+find /opt/zzy/ -name "zzy-*" -exec sudo ln -s {} ~/bin/  \; && \
 echo "new scripts symbolic links added" ;\
 # make zzy scripts executable
-find ~/.zzy/ -name "zzy-*" -exec chmod +x {} \; && \
+find /opt/zzy/ -name "zzy-*" -exec chmod +x {} \; && \
 echo "new zzy- scripts are now ready to use, have fun :D"
