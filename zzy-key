@@ -1,22 +1,16 @@
 #!/usr/bin/env bash
 
-# Warn not key provided
-[ -z "$1" ] && echo "E: Did not provide a key name" ; \
-
-# Stop the execution.
-[ -z "$1" ] && exit ; \
-
-# Prepare key not found
-isFile=false;
+# Prepare fail to find key
+defaultPath=false;
 
 # Look for private key.
-[ -f ~/.ssh/$1/id_rsa ] && isFile=true ; \
+[ -f ~/.ssh/id_rsa ] && defaultPath=true ; \
 
 # Inform key not found.
-[ "$isFile" = "false" ] && echo "E: key $1 not found in ssh keys dir." ; \
+[ "$defaultPath" = "false" ] && echo "E: key not found in default dir." ; \
 
 # Stop the execution.
-[ "$isFile" = "false" ] && exit ; \
+[ "$defaultPath" = "false" ] && exit ; \
 
 # Add ssh key to agent.
-ssh-add -t 90 ~/.ssh/$1/id_rsa
+ssh-add ~/.ssh/id_rsa
