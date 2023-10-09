@@ -1,2 +1,3 @@
 create append utility to append information on top of the a given document.
 make every script take flags to provide help and info about the command, options, usage.
+agrega un script para renombrar archivo conservando la extension
